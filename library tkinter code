@@ -1,0 +1,215 @@
+from tkinter import* 
+import sqlite3
+root=Tk()
+
+root.geometry('1400x1400')
+root.title('database using Sqlite3 and Tkinter')
+root.configure(background='blue')
+text1=StringVar()
+from tkinter import*
+
+text2=StringVar()
+text3=StringVar()
+text4=StringVar()
+text5=StringVar()
+text6=StringVar()
+text7=StringVar()
+db=sqlite3.connect('Libary5.db')
+cursor=db.cursor()
+cursor.execute('CREATE TABLE IF NOT EXISTs people(Name TEXT,Author TEXT, Books_name TEXT, class TEXT,Stream TEXT, Submission_Date TEXT, ID_No TEXT)')
+db.commit()
+lab=Label(root,text='Name:',font=('none 13 bold'))
+lab.place(x=2,y=50)
+entname=Entry(root,width=20,font=('none 13 bold'), textvar=text1)
+entname.place(x=80,y=50)
+lab1=Label(root,text='Author:',font=('none 13 bold'))
+lab1.place(x=300,y=50)
+entphone=Entry(root, width=20, font=('none 13 bold'), textvar=text2)
+entphone.place(x=380,y=50)
+lab2=Label(root,text='Books_name:',font=('none 13 bold'))
+lab2.place(x=2,y=100)
+entemail=Entry(root,width=50,font=('none 13 bold'), textvar=text3)
+entemail.place(x=150,y=100)
+lab3=Label(root,text='class:',font=('none 13 bold'))
+lab3.place(x=2,y=150)
+entadd=Entry(root,width=20,font=('none 13 bold'), textvar=text4)
+entadd.place(x=100,y=150)
+lab4=Label(root,text='Stream:',font=('none 13 bold'))
+lab4.place(x=650,y=50)
+entstream=Entry(root,width=10,font=('none 13 bold'), textvar=text5)
+entstream.place(x=750,y=50)
+lab5=Label(root,text='submission_Date:',font=('none 13 bold'))
+lab5.place(x=800,y=100)
+entbldgrp=Entry(root,width=10,font=('none 13 bold'), textvar=text6)
+entbldgrp.place(x=1000,y=100)
+lab6=Label(root,text='Id_No:',font=('none 13 bold'))
+lab6.place(x=950,y=50)
+entid=Entry(root,width=20,font=('none 13 bold'), textvar=text7)
+entid.place(x=1050,y=50)
+def insert():
+    Name=text1.get()
+    Author=text2.get()
+    Books_name=text3.get()
+    Class=text4.get()
+    Stream=text5.get()
+    Submission_Date=text6.get()
+    ID_No=text7.get()
+    conn=sqlite3.connect('Libary5.db')
+    with conn:
+        cursor=conn.cursor()
+        cursor.execute('INSERT INTO people(Name, Author,Books_name,class, Stream,Submission_Date, ID_No) VALUES(?,?,?,?,?,?,?)',(Name,Author,Books_name,Class,Stream,Submission_Date,ID_No))
+        db.close()
+Name=StringVar()
+Author=StringVar()
+Books_name=StringVar()
+Class=StringVar()
+Stream=StringVar()
+Submission_Date=StringVar()
+ID_No=StringVar()
+def updateContact():
+    nam=Name.get()
+    author=Author.get()
+    Books_name=Books_name.get()
+    Class=Class.get()
+    stream=Stream.get()
+    Submission_Date=Submission_Date.get()
+    ID = ID_No.get()
+    connnt=sqlite3.connect('Libary5.db')
+    cursor = connnt.cursor()
+    cursor.execute('update people SET Name = ?, Author = ?,Books_name= ?,class = ?,Stream = ?,Submission_Date = ? where ID_No= ?',(nam,Author,Books_name,Class,stream,Submission_Date,ID))
+    connnt.commit()
+#submit button
+but=Button(root,padx=2,pady=2,text='Submit',command=insert,font=('none 13 bold'))
+but.place(x=100,y=200)
+#update label and boxes
+labuname1=Label(root,text='Update Name: ',font=('none 13 bold'))
+labuname1.place(x=2,y=250)
+enttupdatename1=Entry(root,width=20,font=('none 13 bold'),textvar=Name)
+enttupdatename1.place(x=140,y=250)
+labphone=Label(root,text='Update Author: ',font=('none 13 bold'))
+labphone.place(x=350,y=250)
+enttupdatephone=Entry(root,width=20,font=('none 13 bold'),textvar=Author)
+enttupdatephone.place(x=530,y=250)
+labemail=Label(root,text='Update class: ',font=('none 13 bold'))
+labemail.place(x=2,y=300)
+enttupdateemail=Entry(root,width=50,font=('none 13 bold'),textvar=Class)
+enttupdateemail.place(x=150,y=300)
+labaddress=Label(root,text='Update stream: ',font=('none 13 bold'))
+labaddress.place(x=2,y=350)
+enttupdateaddress=Entry(root,width=80,font=('none 13 bold'),textvar=Stream)
+enttupdateaddress.place(x=150,y=350)
+labblood_group=Label(root,text='Update Submission_date: ',font=('none 13 bold'))
+labblood_group.place(x=800,y=250)
+enttupdateblood_group=Entry(root,width=10,font=('none 13 bold'),textvar=Submission_Date)
+enttupdateblood_group.place(x=1100,y=250)
+labstream=Label(root,text='Update Books_name: ',font=('none 13 bold'))
+labstream.place(x=650,y=300)
+enttupdatestream=Entry(root,width=10,font=('none 13 bold'),textvar=Books_name)
+enttupdatestream.place(x=900,y=300)
+
+labID_No=Label(root,text='Provide ID_No : ',font=('none 13 bold'))
+labID_No.place(x=80,y=400)
+entupdateID_No=Entry(root,width=20,font=('none 13 bold'),textvar=ID_No)
+entupdateID_No.place(x=250,y=400)
+#update button
+buttupdate=Button(root,padx=2,text='Update',command=updateContact,font=('none 13 bold'))
+buttupdate.place(x=500,y=400)
+#delete
+dell=StringVar()
+def det():
+    dee=dell.get();
+    connnt=sqlite3.connect('Libary5.db')
+    cursor=connnt.cursor()
+    cursor.execute('DELETE FROM people WHERE ID_No= ?',[dee])
+    connnt.commit()
+labdelete=Label(root,text='Enter ID for Deletion : ',font=('none 13 bold'))
+labdelete.place(x=80,y=450)
+endelete=Entry(root,width=20,font=('none 13 bold'),textvar=dell)
+endelete.place(x=300,y=450)
+    
+butdel=Button(root,padx=2,pady=2,text='Delete',command=det,font=('none 13 bold'))
+butdel.place(x=500,y=450)
+
+#SHOW
+def show():
+    connt=sqlite3.connect('Libary5.db')
+    cursor=connt.cursor()
+    r=cursor.execute('SELECT * FROM people')
+    listNodes.delete(0,END)
+    for row in cursor.fetchall():
+        listNodes.insert(END,  row)
+#SHOW BUTTTON
+res=Button(root,width=12,padx=2,pady=3,text='Show',command=show,font=('none 13 bold'))
+res.place(x=450,y=600)
+
+frame = Frame(root)
+frame.place(x=650,y=500)
+listNodes = Listbox(frame, width=50, height=4, font=("Helvetica", 12))
+listNodes.pack(side="left", fill="y")
+
+
+scrollbar = Scrollbar(frame, orient="vertical")
+scrollbar.config(command=listNodes.yview)
+scrollbar.pack(side="right", fill="y")
+
+listNodes.config(yscrollcommand=scrollbar.set)
+
+def get_selected_row(event):
+    global selected_tuple
+    if len(listNodes.curselection())>0:
+        index=listNodes.curselection()[0]
+        selected_tuple=listNodes.get(index)
+        entname.delete(0,END)
+        entname.insert(END,selected_tuple[1])
+        entAuthor.delete(0,END)
+        entAuthor.insert(END,selected_tuple[2])
+        entBooks_name.delete(0,END)
+        entBooks_name.insert(END,selected_tuple[3])
+        entclass.delete(0,END)
+        entclass.insert(END,selected_tuple[4])
+        entID_No.delete(0,END)
+        entID_No.insert(END,selected_tuple[5])
+        entstream.delete(0,END)
+        entstream.insert(END,selected_tuple[6])
+        entSubmission_Date.delete(0,END)
+        entSubmission_Date.insert(END,selected_tuple[7])
+listNodes.bind('<<ListboxSelect>>',get_selected_row)        
+
+
+
+def destroyRootWindow():
+    root.destroy()        
+
+    secondWindow =Tk()
+            
+    secondWindow.title("Display results")
+
+    appLabel =Label(secondWindow, text="Libary Management System", fg='blue', width=40)
+    appLabel.config(font=("Sylfaen", 30))
+    appLabel.pack()
+
+    tree = ttk.Treeview(secondWindow)
+    tree["columns"] = ("one", "two","three","four","five","six","seven")
+
+    tree.heading("one", text="NAME")
+    tree.heading("two", text="AUTHOR")
+    tree.heading("three", text="BOOKS_NAME")
+    tree.heading("four", text="CLASS")
+    tree.heading("five", text="ID_No")
+    tree.heading("six", text="STREAM")
+    tree.heading("seven", text="SUBMISSION_DATE")
+    cursor = db.execute("SELECT * FROM " + "people" + " ;")
+    i = 0
+
+    
+    for row in cursor:
+        tree.insert('', i, text="Student-"+ str(row[0]),values=(row[1],row[2],row[3],row[4],row[5],row[6]))
+        i = i + 1
+    tree.pack()
+    secondWindow.mainloop()
+
+displayButton =Button(root, text="Display", command=lambda :destroyRootWindow())
+displayButton.place(x=370,y=640)
+
+root.mainloop()
+
